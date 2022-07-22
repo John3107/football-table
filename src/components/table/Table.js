@@ -1,8 +1,9 @@
 import style from './Table.module.scss';
 import {useDispatch, useSelector} from "react-redux";
 import {useState} from "react";
-import {addNewTeamTC} from "../../bll/app-reducer";
+import {addNewTeamTC, setTeamResultsAC} from "../../bll/app-reducer";
 import Team from "./team/Team";
+import {useEffect} from "react";
 
 function Table() {
     const data = useSelector(state => state.app)
@@ -10,6 +11,28 @@ function Table() {
 
     const [newTeam, setNewTeam] = useState({title: '', teamsCount: 0})
     const [repeatTeam, setRepeatTeam] = useState('')
+
+    useEffect(() => {
+        if (data.teams.length < 2) {
+        } else {
+            let opp = []
+            for (let i = 0; i < data.teams.length; i++) {
+                for (let j = i + 1; j < data.teams.length; j++) {
+                    if (data.teams[j]) {
+                        let teamScores = {
+                            id: data.teams[i].title + data.teams[j].title,
+                            team1: data.teams[i].title,
+                            team1Goals: null,
+                            team2: data.teams[j].title,
+                            team2Goals: null
+                        }
+                        opp.push(teamScores)
+                    }
+                }
+            }
+            dispatch(setTeamResultsAC(opp))
+        }
+    }, [data.teams])
 
     const onChangeHandler = (event) => {
         setRepeatTeam(event.currentTarget.value)

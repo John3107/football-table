@@ -1,6 +1,6 @@
 import style from './Results.module.scss';
 import {useDispatch, useSelector} from "react-redux";
-import {setTeamResultsAC, setUpdateResultsAC} from "../../bll/app-reducer";
+import {setUpdateResultsAC} from "../../bll/app-reducer";
 import {useEffect, useState} from "react";
 
 function Results() {
@@ -47,30 +47,6 @@ function Results() {
             }
         })
     }, [opponents])
-
-    useEffect(() => {
-        if (data.teams.length < 2) {
-            return
-        } else {
-            let opp = []
-            debugger
-            for (let i = 0; i < data.teams.length; i++) {
-                for (let j = i + 1; j < data.teams.length; j++) {
-                    if (data.teams[j]) {
-                        let teamScores = {
-                            id: data.teams[i].title + data.teams[j].title,
-                            team1: data.teams[i].title,
-                            team1Goals: null,
-                            team2: data.teams[j].title,
-                            team2Goals: null
-                        }
-                        opp.push(teamScores)
-                    }
-                }
-            }
-            dispatch(setTeamResultsAC(opp))
-        }
-    }, [data.teams])
 
     return (
         <div className={style.results}>

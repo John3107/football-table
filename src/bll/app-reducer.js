@@ -90,18 +90,15 @@ export const addNewTeamTC = ({title, teamsCount}) => (dispatch) => {
     }
 }
 
-// export const resultsTC = () => (dispatch) => {
-//     const results = localStorage.getItem('results')
-//     if (results) {
-//         let arrayResults = JSON.parse(results)
-//         setTeamResultsAC(arrayResults)
-//         localStorage.setItem('results', JSON.stringify(arrayTeams))
-//     } else {
-//         const arrayTeams = []
-//         arrayTeams.push(newTeam)
-//         localStorage.setItem('teams-list', JSON.stringify(arrayTeams))
-//     }
-// }
+export const teamsResultsInitialTC = () => (dispatch) => {
+    const results = localStorage.getItem('results')
+    if (results) {
+        let arrayResults = JSON.parse(results)
+        dispatch(setTeamResultsAC(arrayResults))
+    } else {
+        dispatch(setTeamResultsAC([]))
+    }
+}
 
 // export const resultsTC = () => (dispatch) => {
 //     const results = localStorage.getItem('results')

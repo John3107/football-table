@@ -3,7 +3,7 @@ import Table from "./components/table/Table";
 import Results from "./components/results/Results";
 import {useDispatch} from "react-redux";
 import {useEffect} from "react";
-import {getTeamsListTC} from "./bll/app-reducer";
+import {getTeamsListTC, teamsResultsInitialTC} from "./bll/app-reducer";
 
 function App() {
 
@@ -11,6 +11,7 @@ function App() {
 
     useEffect(() => {
         dispatch(getTeamsListTC())
+        dispatch(teamsResultsInitialTC())
     }, [])
 
     return (
