@@ -1,25 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import style from './App.module.scss';
+import Table from "./components/table/Table";
+import Results from "./components/results/Results";
+import {useDispatch} from "react-redux";
+import {useEffect} from "react";
+import {getTeamsListTC} from "./bll/app-reducer";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(getTeamsListTC())
+    }, [])
+
+    return (
+        <div className={style.app}>
+            <Table/>
+            <Results/>
+        </div>
+    );
 }
 
 export default App;

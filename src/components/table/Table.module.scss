@@ -1,0 +1,38 @@
+.tableContainer {
+  display: flex;
+  flex-direction: column;
+
+  .inputContainer {
+    .input {
+      margin-right: 5px;
+    }
+
+    margin-bottom: 15px;
+  }
+}
+
+table {
+  border-collapse: collapse;
+  border: #3f3f9b 2px solid;
+  width: 100%;
+
+  thead {
+    th {
+      padding: 5px;
+      background: #d3d2d2;
+      border: #b4b3b3 1px solid;
+      border-top: none;
+      font-size: 12px;
+    }
+  }
+
+  tbody {
+    background-color: #ddd;
+    overflow: auto;
+
+
+    td {
+      padding: 3px 10px;
+    }
+  }
+}
