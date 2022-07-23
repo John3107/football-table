@@ -1,7 +1,7 @@
 import style from './Table.module.scss';
 import {useDispatch, useSelector} from "react-redux";
 import {useState} from "react";
-import {addNewTeamTC, setTeamResultsAC} from "../../bll/app-reducer";
+import {addNewTeamTC, teamResultsTC} from "../../bll/app-reducer";
 import Team from "./team/Team";
 import {useEffect} from "react";
 
@@ -11,28 +11,23 @@ function Table() {
 
     const [newTeam, setNewTeam] = useState({title: '', teamsCount: 0})
     const [repeatTeam, setRepeatTeam] = useState('')
+    const [callEffect, setCallEffect] = useState('')
 
     useEffect(() => {
-        if (data.teams.length < 2) {
-        } else {
+        if(data.teams.length < 2) return
             let opp = []
-            for (let i = 0; i < data.teams.length; i++) {
-                for (let j = i + 1; j < data.teams.length; j++) {
-                    if (data.teams[j]) {
+            for (let i = 0; i < data.teams.length - 1; i++) {
                         let teamScores = {
-                            id: data.teams[i].title + data.teams[j].title,
+                            id: data.teams[i].title + data.teams[data.teams.length - 1].title,
                             team1: data.teams[i].title,
                             team1Goals: null,
-                            team2: data.teams[j].title,
+                            team2: data.teams[data.teams.length - 1].title,
                             team2Goals: null
                         }
                         opp.push(teamScores)
-                    }
-                }
             }
-            dispatch(setTeamResultsAC(opp))
-        }
-    }, [data.teams])
+            dispatch(teamResultsTC(opp))
+    }, [callEffect])
 
     const onChangeHandler = (event) => {
         setRepeatTeam(event.currentTarget.value)
@@ -40,6 +35,7 @@ function Table() {
     }
 
     const onClickHandler = () => {
+        setCallEffect(newTeam.title)
         let repTeam = data.teams.find(el => el.title === repeatTeam)
         if (repTeam) {
             alert('Such a team already exists. Enter a different team name.')
