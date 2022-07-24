@@ -3,11 +3,11 @@
   flex-direction: column;
 
   .inputContainer {
+    margin-bottom: 15px;
+
     .input {
       margin-right: 5px;
     }
-
-    margin-bottom: 15px;
   }
 }
 
@@ -36,3 +36,9 @@ table {
     }
   }
 }
+
+.inputRest {
+  margin-top: 20px;
+  width: 50px;
+}
+

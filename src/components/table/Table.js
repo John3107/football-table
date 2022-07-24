@@ -1,9 +1,10 @@
 import style from './Table.module.scss';
 import {useDispatch, useSelector} from "react-redux";
 import {useState} from "react";
-import {addNewTeamTC, teamResultsTC} from "../../bll/app-reducer";
+import {addNewTeamTC, resetLSTC, teamResultsTC} from "../../bll/app-reducer";
 import Team from "./team/Team";
 import {useEffect} from "react";
+import {addNewOpponents} from "../../hooks/hooks";
 
 function Table() {
     const data = useSelector(state => state.app)
@@ -14,19 +15,10 @@ function Table() {
     const [callEffect, setCallEffect] = useState('')
 
     useEffect(() => {
-        if(data.teams.length < 2) return
-            let opp = []
-            for (let i = 0; i < data.teams.length - 1; i++) {
-                        let teamScores = {
-                            id: data.teams[i].title + data.teams[data.teams.length - 1].title,
-                            team1: data.teams[i].title,
-                            team1Goals: null,
-                            team2: data.teams[data.teams.length - 1].title,
-                            team2Goals: null
-                        }
-                        opp.push(teamScores)
-            }
-            dispatch(teamResultsTC(opp))
+        if (data.teams.length < 2) return
+        let opp = []
+        addNewOpponents(data, opp)
+        dispatch(teamResultsTC(opp))
     }, [callEffect])
 
     const onChangeHandler = (event) => {
@@ -44,6 +36,10 @@ function Table() {
             setNewTeam({title: '', teamsCount: 0})
         }
     }
+    const resetLSHandler = () => {
+        dispatch(resetLSTC())
+    }
+
     return (
         <div className={style.tableContainer}>
             <div className={style.inputContainer}>
@@ -52,21 +48,24 @@ function Table() {
                        className={style.input}
                        placeholder={'New team'}
                        onChange={onChangeHandler}/>
-                <input type="button" value="Add" onClick={() => onClickHandler()}/>
+                <input type="button" value="Add" onClick={onClickHandler}/>
             </div>
-            <div>
+            <div className={style.tableContainer}>
                 <table>
                     <thead>
                     <tr>
-                    {data.headerData.map((val, key) => {
-                        return <th key={key}>{val}</th>})}
+                        {data.headerData.map((val, key) => {
+                            return <th key={key}>{val}</th>
+                        })}
                     </tr>
                     </thead>
                     <tbody>
                     {data.teams.map((val, key) => {
-                        return <Team team={val} key={key}/>})}
+                        return <Team team={val} key={key}/>
+                    })}
                     </tbody>
                 </table>
+                <input type="button" value="reset" onClick={resetLSHandler} className={style.inputRest}/>
             </div>
         </div>
     );

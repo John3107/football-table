@@ -87,6 +87,13 @@ export const teamResultsUpdatedTC = (updatedResults) => (dispatch) => {
     localStorage.setItem('results', JSON.stringify(resultsMapped))
 }
 
+export const resetLSTC = () => (dispatch) => {
+    localStorage.removeItem('results')
+    localStorage.removeItem('teams-list')
+    dispatch(setTeamResultsAC([]))
+    dispatch(setGetTeamsAC([]))
+}
+
 export const setGetTeamsAC = (teams) => ({type: 'GET-TEAMS-LIST', teams})
 export const setNewTeamAC = (newTeam) => ({type: 'NEW-TEAM', newTeam})
 export const setTeamResultsAC = (result) => ({type: 'TEAM-RESULTS', result})
